@@ -8,6 +8,7 @@ object App {
   def main(args: Array[String]): Unit = {
 
     val filePath = args(0)
+    val outputPath = args(1)
 
     val sparkSession = SparkSession
       .builder()
@@ -19,7 +20,9 @@ object App {
     import sparkSession.implicits._
     val castedFlightData = rawData.as[RawFlightData]
 
-    println(s"Number of flight data: ${castedFlightData.count()}")
+    val tt = castedFlightData.groupByKey(r => r.ORIGIN_COUNTRY_NAME).count()
+
+    tt.write.json(outputPath)
 
   }
 
