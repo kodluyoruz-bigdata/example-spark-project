@@ -12,7 +12,6 @@ object App {
     val sparkSession = SparkSession
       .builder()
       .appName("kodluyoruz-spark-project")
-//      .master("local[2]")
       .getOrCreate()
 
     val rawData = sparkSession.read.json(filePath)
