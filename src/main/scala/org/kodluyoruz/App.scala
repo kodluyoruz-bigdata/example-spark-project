@@ -20,9 +20,13 @@ object App {
     import sparkSession.implicits._
     val castedFlightData = rawData.as[RawFlightData]
 
-    val tt = castedFlightData.groupByKey(r => r.ORIGIN_COUNTRY_NAME).count()
 
-    tt.write.json(outputPath)
+    case class Result(key: String, value: Long)
+    val tt = castedFlightData
+      .groupByKey(r => r.ORIGIN_COUNTRY_NAME)
+      .count().map(r => Result(r._1, r._2))
+
+    tt.coalesce(1).write.json(outputPath)
 
   }
 
