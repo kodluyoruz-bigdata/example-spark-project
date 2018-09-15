@@ -10,6 +10,8 @@ case class RawFlightData(ORIGIN_COUNTRY_NAME: String,
                          DEST_COUNTRY_NAME: String,
                          count: Long)
 
+case class FlightAggResult(key: String, value: Long)
+
 case class RawBikeStationData(station_id: String,
                               name: String,
                               lat: String,
